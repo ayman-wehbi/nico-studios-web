@@ -1,5 +1,5 @@
 # Nico Studios ((Nicostudios.app)[nicostudios.app])
-
+##(Nicostudios.app)[nicostudios.app]
 #### Web Application for Songwriters
 
 Nico Studios is a web application designed to enhance the songwriting process for musicians and creatives. Utilizing the versatility and accessibility of the web platform, Nico Studios allows songwriters to write, organize, and store their songs online. This service is especially useful for artists who are transitioning from traditional pen and paper to digital songwriting tools. The web version shares core functionalities with its mobile counterpart, ensuring a seamless experience across devices.
