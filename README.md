@@ -1,4 +1,4 @@
-# Nico Studios
+# Nico Studios (Nicostudios.app)
 
 #### Web Application for Songwriters
 
