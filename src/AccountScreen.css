@@ -1,0 +1,483 @@
+@font-face {
+  font-family: 'Lemon';
+  src: local('Lemon'), url('./fonts/Lemon-Regular.ttf') format('truetype');
+}
+
+.app-container {
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  
+}
+
+.navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.navigation-bar button {
+  background-color: #fACE88;
+  color: #101214;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.navigation-bar button:hover {
+  background-color: #FACE88;
+}
+
+.songs-list {
+
+  gap: 15px;
+}
+
+.songs-list h1 {
+  color: #ffffff;
+  text-align: left;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.songs-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.songs-list li {
+  background-color: hsl(344, 100%, 93%);
+  color: #101214;
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.songs-list li:hover {
+  transform: scale(1.05);
+}
+
+.create-song-button {
+  background-color: #FACE88;
+  color: #101214;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  align-self: center;
+  margin-top: 30px;
+}
+
+.create-song-button:hover {
+  background-color: #ffd9e3;
+}
+
+.song-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Aligns children (title and lyrics) to the start of the flex container */
+  height: 100%; /* Ensures the card stretches to the full height of its container */
+}
+
+.song-title {
+  font-weight: bold;
+  font-size: 18px;
+  align-self: flex-start; /* Aligns the title to the start (left) of the flex container */
+  margin-bottom: 10px; /* Adds some space between the title and lyrics */
+}
+
+.song-lyrics {
+  font-size: 14px;
+  color: #aaa;
+  overflow: hidden; /* Prevents lyrics from overflowing the card */
+  text-overflow: ellipsis; /* Adds an ellipsis if the lyrics are too long */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limits the lyrics to 3 lines */
+  -webkit-box-orient: vertical;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  margin-top: 32px;
+  
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  cursor: pointer;
+  padding: 10px ;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 5px;
+  border-color: #FACE88;
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 7px;
+}
+
+.sidebar li:hover {
+  background-color:  #fACE88;
+  color: black;
+  border-radius: 5px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #121212;
+  color: white;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.headlines {
+  display: flex;
+  justify-content: space-between; /* Adjusts space between the two headlines */
+  align-items: center; /* Centers items vertically */
+  padding: 0 20px; /* Ensures padding matches the rest of the layout */
+  background-color: #121212; /* Matches the app container background */
+  color: #ffffff;
+}
+
+.sidebar, .main-content {
+  padding-top: 20px; /* Adjusts padding to account for headlines now being outside */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #2C2C2C; /* Dark background for contrast */
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  width: 650px; /* Or your desired width */
+  height: 600px;
+  max-width: 95%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.modal-title-input {
+  background-color: #2C2C2C;
+  border: 1px solid  #2C2C2C;
+  color: white;
+  padding: 15px 0px;
+  font-size: 24px; /* Larger font for title */
+   /* Space between title and content */
+}
+
+.modal-content ul {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modal-lyrics-input {
+  background-color: #2C2C2C;
+  border: 1px solid  #2C2C2C;
+  border-radius: 4px;
+  color: white;
+  padding: 15px 0px;
+  font-size: 16px;
+  height: 500px; /* Larger height for content */
+  resize: none; /* Disable resize handle */
+  margin-bottom: 20px;
+}
+
+.modal-title-input:focus, .modal-lyrics-input:focus {
+  outline: none;
+}
+
+.modal-lyrics-input::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Handle */
+.modal-lyrics-input::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.modal-lyrics-input::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: default;
+}
+
+.modal-actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px; /* Horizontal padding should match modal-content padding */
+}
+
+.modal-actions-right {
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0px; /* Horizontal padding should match modal-content padding */
+}
+
+.modal-save-button, .modal-close-button {
+  left: 0;
+  right: 0;
+  background-color: transparent; /* No background for icon buttons */
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+
+.modal-save-button, .modal-close-button {
+
+  font-size: 20px; /* Adjust size as needed */
+}
+
+.modal-save-button:hover, .modal-close-button:hover .allSongs-button:hover {
+  color: gray; /* Slightly lighter shade on hover */
+}
+
+button {
+  background-color: #fACE88; /* Button background */
+  color: #101214; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #ffd9e3; /* Lighter shade on hover */
+}
+
+/* Additional styling for specifically targeting the modal's buttons */
+.modal-content button {
+ /* Full width buttons */
+ /* Margin to separate buttons from each other and content */
+  margin-top: 5px;
+}
+
+.modal-content li {
+  padding: 10px;
+  border-bottom: 1px solid #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modal-content li:hover {
+  background-color: #fACE88;
+}
+
+.toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #121212;
+  color: white;
+}
+
+.toolbar h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin: 0 300px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background-color: #2C2C2C;
+  color: #ffffff;
+}
+
+.settings-icon {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.settings-icon:hover {
+  color: #fACE88; /* Lighter shade on hover */
+}
+
+.header {
+  color: #Face88;
+  font-family: 'Lemon'; /* Make sure the font is imported or available */
+}
+
+.tool-div {
+  height: 0.5px; /* Or 1px for a thinner line */
+  background-color: #393939;
+  margin: 0;
+}
+
+.songlist-header {
+  color: black;
+}
+
+.song-list-header{
+  display: flex;
+}
+
+.allSongs-button {
+  background-color: transparent; /* Removes any background styling */
+  border: none; /* Removes border */
+  color: rgb(72, 72, 72); /* Sets the text color */
+  cursor: pointer; /* Shows a pointer cursor on hover to indicate it's clickable */
+  transition: color 0.3s ease-in-out; /* Smooth transition for hover effect */
+  padding: 2px 8px; /* Reduced padding to decrease height */
+  display: inline-flex; /* Uses flexbox to center content */
+  align-items: center; /* Centers items vertically within the button */
+  justify-content: center; /* Centers content horizontally */
+  font-size: 12px; /* Smaller font size */
+  line-height: 1; /* Reduces space between lines of text, if any */
+  margin: 0; /* Removes any default margin */
+}
+
+.allSongs-div {
+  display: flex; /* Establishes a flex container */
+  align-items: center; /* Vertically centers the flex items */
+  justify-content: center; /* Horizontally centers the flex items, if needed */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Directly below the toolbar */
+  right: 0; /* Align to the right edge of the toolbar */
+  background-color: #2C2C2C;
+  margin-right: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100; /* Ensure it's above other content */
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+.dropbutton{
+  padding-left: 40px;
+  padding-right: 40px;
+  top: 5 px;
+}
+
+.modal-option-button {
+  padding: 5px 5px;
+  margin: 10px;
+  background-color: #FACE88;
+  color: #101214;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 45px;
+  height: 50%;
+  transition: background-color 0.3s;
+}
+
+.modal-option-button:hover {
+  background-color: #ffd9e3;
+}
+
+.modal-content-createProject{
+    background-color: #2C2C2C; /* Dark background for contrast */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    width: 250px; /* Or your desired width */
+    height: 100px;
+    max-width: 95%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.input-createProject {
+  width: 90%;
+  margin: 7px 0;
+  padding: 8px;
+  margin-bottom: 13px;
+  border-radius: 0; /* Removes border-radius for a flat bottom */
+  border: none; /* Removes all borders */
+  border-bottom: 1px solid #ccc; /* Adds underline */
+  background-color: transparent; /* Makes background transparent */
+  color: #FFF; /* Sets text color to white */
+  font-size: 16px; /* Adjusts text size for readability */
+  font-family: 'Cursive', cursive; /* Optional: adjust font family as needed */
+}
+
+.input-createProject:focus {
+  outline: none; /* Removes focus outline */
+  border-bottom: 1px solid #Face88; /* Changes underline color on focus */
+}
+
+.create-option-button {
+  background-color: #fACE88; /* Button background */
+  color: #101214; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-right: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}

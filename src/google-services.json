@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903580706510",
+    "project_id": "nico-studios",
+    "storage_bucket": "nico-studios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903580706510:android:8554fd7bb77603119f929f",
+        "android_client_info": {
+          "package_name": "com.nicosocials.ns"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2mhkKZsaCGh2o2gtAW3sUmYCCmjt7tEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

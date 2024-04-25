@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.container {
+  display: flex;
+  align-items: center;
+  padding: 2%;
+  background-color: #0f0f0f;
+  height: 100%; /* Flex 1 in React Native often translates to taking full height in web */
+}
+
+.title-container {
+  margin-top: 75%; /* This might need adjustment based on the actual layout */
+  align-items: flex-end;
+  margin-bottom: 10%;
+  display: flex; /* Ensure flex behaviors are applied */
+  flex-direction: column; /* Align items vertically */
+}
+
+.title {
+  font-size: 45px;
+  color: #face88;
+  /* font-family: 'Lemon', sans-serif; */ /* Uncomment and replace 'Lemon' with the actual font name if the font is available for web */
+  margin-bottom: -22px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #f754c8;
+  margin-left: 5px;
+  /* font-family: 'Cursives', cursive; */ /* Uncomment and replace 'Cursives' with the actual font name if the font is available for web */
+}
