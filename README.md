@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# Nico Studios
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Web Application for Songwriters
 
-## Available Scripts
+Nico Studios is a web application designed to enhance the songwriting process for musicians and creatives. Utilizing the versatility and accessibility of the web platform, Nico Studios allows songwriters to write, organize, and store their songs online. This service is especially useful for artists who are transitioning from traditional pen and paper to digital songwriting tools. The web version shares core functionalities with its mobile counterpart, ensuring a seamless experience across devices.
 
-In the project directory, you can run:
+The application is tailored to the needs of songwriters, providing a distraction-free environment to foster creativity. Unlike typical note-taking apps, Nico Studios offers specialized features to cater to the unique workflow of musicians, including organizational tools specifically designed for managing discographies and creative projects.
 
-### `npm start`
+## Features
+- Create, view, and edit lyric files
+- Organize songs into projects
+- Accessible task list to keep track of songwriting goals
+- Efficient search functionality to quickly find lyrics by title
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Web-Specific Features
+- Cloud-based storage for easy access across different devices
+- Responsive design for desktop, tablet, and mobile browsing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+#### Home Screen
+![Home Screen](https://nicostudios.app/screenshots/home_screen.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Projects Overview
+![Projects Overview](https://nicostudios.app/screenshots/projects_overview.png)
 
-### `npm run build`
+#### Song Lyrics Management
+![Song Lyrics Management](https://nicostudios.app/screenshots/song_lyrics.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Getting Started
+Visit [Nico Studios](https://nicostudios.app) and sign up for a free account to begin your songwriting journey. The web application does not require any installations, allowing you to start crafting your songs immediately from any web browser.
