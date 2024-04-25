@@ -1,17 +1,17 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth'; // Simplify auth import for web
+import { getAuth } from 'firebase/auth'; 
 import { getAnalytics } from 'firebase/analytics';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBUcOCFYmBeIJsGBZCjtdMyX2nAAx1qIiM",
-  authDomain: "nico-studios-6969e.firebaseapp.com",
-  projectId: "nico-studios-6969e",
-  storageBucket: "nico-studios-6969e.appspot.com",
-  messagingSenderId: "782941193062",
-  appId: "1:782941193062:web:575cf9c305e15488aabea7",
-  measurementId: "G-9DKVQR22MY"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 
 // Initialize Firebase App
