@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './firebase';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
@@ -11,6 +11,13 @@ const SignupScreen = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+    if (isMobile) {
+      navigate("/MobilePage");
+    }
+  }, [navigate]);
 
   const handleSignIn = async () => {
     try {
@@ -44,7 +51,7 @@ const SignupScreen = () => {
   return (
     <div className="container">
        <div className="image-container">
-        <img src="screenshots.png" style={{ width: '550px', height: 'auto' }} alt="Screenshot 1" />
+        <img src="https://nicostudios.s3.us-east-2.amazonaws.com/Screenshots.png" style={{ width: '550px', height: 'auto' }} alt="Screenshot 1" />
         <div className="additional-container">
             <div className="additional-card">
               <a href="https://drive.google.com/file/d/1IyVio7RHcatCANd1Vnzd5tUVJyu-uXh1/view?usp=sharing" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>

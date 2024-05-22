@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Lemon';
+  src: local('Lemon'), url('./fonts/Lemon-Regular.ttf') format('truetype');
+}
+
+.landing-container {
+  background-color: #121212;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+.landing-card {
+  background-color: #2C2C2C;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.landing-title {
+  font-family: 'Lemon', sans-serif;
+  color: #Face88;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.landing-subtitle {
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.landing-description {
+  font-size: 14px;
+  color: #d1d1d1;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.landing-button {
+  background-color: #fACE88;
+  color: #101214;
+  border: none;
+  padding: 15px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  width: 100%;
+}
+
+.landing-button:hover {
+  background-color: #ffd9e3;
+}

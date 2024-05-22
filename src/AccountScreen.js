@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { collection, getDocs, doc, getDoc, updateDoc, addDoc} from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc, addDoc, deleteDoc} from 'firebase/firestore';
 import { firestore, auth} from './firebase'; // Ensure this points to your web setup of Firebase
 import './AccountScreen.css'; 
 
@@ -53,7 +53,6 @@ const SongsListWeb = () => {
     return () => unsubscribe(); // Ensure you're calling the unsubscribe function correctly
   }, [navigate]);
 
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isDropdownOpen && !event.target.closest('.dropdown-menu')) {
@@ -90,24 +89,50 @@ const SongsListWeb = () => {
   };
 
   const CreationOptionsModal = ({ isOpen, onClose }) => {
-    if (!isOpen) return null;
-
+    const [isVisible, setIsVisible] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
+  
+    useEffect(() => {
+      let timer;
+      if (isOpen) {
+        setIsVisible(true);
+        timer = setTimeout(() => {
+          setIsAnimating(true);
+        }, 10); // Short delay to ensure the class is added after rendering
+      } else {
+        setIsAnimating(false);
+        timer = setTimeout(() => {
+          setIsVisible(false);
+        }, 300); // Wait for the animation to complete before setting visibility to false
+      }
+  
+      return () => clearTimeout(timer);
+    }, [isOpen]);
+  
+    if (!isVisible) return null;
+  
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                <button className="modal-option-button" onClick={() => {
-                    setIsModalOpen(true);
-                    setIsCreationModalOpen(false);
-                }}>Create Song</button>
-                <button className="modal-option-button" onClick={() => {
-                    setIsProjectCreationModalOpen(true);
-                    setIsCreationModalOpen(false);
-                }}>Create Project</button>
-            </div>
+      <div className="creation-dropdown-overlay" onClick={onClose}>
+        <div className={`creation-dropdown-menu ${isAnimating ? 'open' : ''}`} onClick={e => e.stopPropagation()}>
+          <button className="modal-option-button" onClick={() => {
+            createSong();
+            setIsModalOpen(true);
+            setIsCreationModalOpen(false);
+          }}>Create Song</button>
+          <button className="modal-option-button" onClick={() => {
+            setIsProjectCreationModalOpen(true);
+            setIsCreationModalOpen(false);
+          }}>Create Project</button>
         </div>
+      </div>
     );
   };
-
+  
+  
+  const toggleCreationModal = () => {
+    setIsCreationModalOpen(!isCreationModalOpen);
+  };
+  
 
   const fetchProjects = async () => {
     const auth = getAuth();
@@ -144,31 +169,37 @@ const SongsListWeb = () => {
     setNewProjectName(e.target.value);
   }, []);
 
-  const ProjectCreationModal = ({ isOpen, onClose }) => {
-    if (!isOpen) return null;
+const ProjectCreationModal = ({ isOpen, onClose}) => {
+  const inputRef = useRef(null);
 
-    const handlePTitleChange = (event) => {
-      const { value } = event.target;
-      debounce(() => setTitle(value))();
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
     }
-  
-    return (
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content-createProject" onClick={(e) => e.stopPropagation()}>
-          <input
-            type="text"
-            value={newProjectName}
-            onChange={(e) => setNewProjectName(e.target.value)}
-            className="input-createProject"
-            placeholder="Project Name"
-          />
-          <button className="modal-save-button" onClick={handleCreateProject}>
-            Create Project
-          </button>
-        </div>
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content-createProject" onClick={(e) => e.stopPropagation()}>
+        <input
+          ref={inputRef}
+          type="text"
+          value={newProjectName}
+          onChange={(e) => setNewProjectName(e.target.value)}
+          className="input-createProject"
+          placeholder="Project Name"
+        />
+        <button className="modal-save-button" onClick={handleCreateProject}>
+          Create Project
+        </button>
       </div>
-    );
-  };
+    </div>
+  );
+};
+
+  
   
   const fetchSongs = async () => {
     const auth = getAuth();
@@ -182,6 +213,7 @@ const SongsListWeb = () => {
         songsList = songsList.sort((a, b) => a.title.localeCompare(b.title));
         setSongs(songsList);
         setAllSongs(songsList);
+        setSelectedProjectId(null);
       } catch (error) {
         console.error("Failed to fetch songs:", error);
       }
@@ -220,6 +252,30 @@ const SongsListWeb = () => {
   const handleCreateSong = () => {
     // Implement song creation logic here
     console.log("Create Song Clicked");
+  };
+
+  const handleDelete = async (songId) => {
+    try {
+      // Construct the reference to the specific song document
+      const songRef = doc(firestore, 'users', auth.currentUser.uid, 'songs', songId);
+  
+      // Delete the song document from Firestore
+      await deleteDoc(songRef);
+  
+      console.log(`Song with ID ${songId} deleted successfully.`);
+  
+      // Update the local songs state by filtering out the deleted song
+      setSongs(prevSongs => prevSongs.filter(song => song.id !== songId));
+  
+      // Close the modal and clear the selected song state if the deleted song was selected
+      if (selectedSong.id === songId) {
+        setSelectedSong({ title: '', content: '' });
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Error deleting song:", error);
+      alert('Failed to delete the song. Please try again.');
+    }
   };
 
   const addSongToProject = async (project) => {
@@ -281,22 +337,29 @@ const SongsListWeb = () => {
     if (!isOpen) return null;
   
     return (
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <ul>
+      <div className="modal-overlay-2" onClick={onClose}>
+        <div className="modal-content-2" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <button className="modal-back-button" onClick={onClose}>
+              <i className="fas fa-arrow-left"></i> {/* Back Icon */}
+            </button>
+            <h3 className='projectmodalHeader'>Add '{selectedSong.title}' to</h3>
+          </div>
+          <ul className="project-list">
             {projects.map((project) => (
-              <li key={project.id} onClick={() => addSongToProject(project)}>
+              <li key={project.id} onClick={() => {
+                addSongToProject(project);
+                setIsProjectModalOpen(false);
+                setIsModalOpen(true);
+              }}>
                 {project.name}
               </li>
             ))}
           </ul>
-          <button className="modal-close-button" onClick={onClose}>
-            <i className="fas fa-times"></i> {/* Close icon */}
-          </button>
         </div>
       </div>
     );
-  };  
+  }; 
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -455,10 +518,10 @@ const SongsListWeb = () => {
             <button className="modal-save-button" onClick={handleSave}>
               <i className="fas fa-save"></i> {/* Save Icon */}
             </button>
-            <button className="modal-save-button" onClick={handlePlusIconClick}>
+            <button className="modal-save-button"onClick={() => { handleSave(); handlePlusIconClick(); }}>
               <i className="fas fa-plus"></i> {/* Plus Icon */}
             </button>
-            <button className="modal-save-button" onClick={handleSave}>
+            <button className="modal-save-button" onClick={() => handleDelete(selectedSong.id)}>
               <i className="fas fa-trash-alt"></i> {/* Delete Icon */}
             </button>
         </div>
@@ -472,8 +535,8 @@ const SongsListWeb = () => {
   };
   
 
-  return (    
-    <div>          
+  return (
+    <div>
       <div className="toolbar">
         <h1 className="header">NICO STUDIOS</h1>
         <input
@@ -483,71 +546,74 @@ const SongsListWeb = () => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button onClick={() => setIsCreationModalOpen(true)} className="create-option-button">Create</button>
-        <button className="modal-save-button" onClick={toggleDropdown}>
+        <button onClick={toggleCreationModal} className="create-option-button">Create</button>
+        <button className="settings-icon" onClick={toggleDropdown}>
           <i className="fas fa-cog"></i> {/* Settings icon */}
         </button>
-        
+
         {isDropdownOpen && <DropdownMenu />}
-        
       </div>
-      <CreationOptionsModal isOpen={isCreationModalOpen} onClose={() => setIsCreationModalOpen(false)} />
+
+      <CreationOptionsModal isOpen={isCreationModalOpen} onClose={toggleCreationModal} />
+
       <div className="tool-div"></div> {/* Style for the dividing line */}
       <div className="app-container">
-      <ProjectCreationModal isOpen={isProjectCreationModalOpen} onClose={() => setIsProjectCreationModalOpen(false)} />
+        <ProjectCreationModal isOpen={isProjectCreationModalOpen} onClose={() => setIsProjectCreationModalOpen(false)} />
         <ProjectListModal
           isOpen={isProjectModalOpen}
-          onClose={() => setIsProjectModalOpen(false)}
-          addSongToProject={addSongToProject}
+          onClose={() => { setIsProjectModalOpen(false); setIsModalOpen(true); }}
+          addSongToProject={(project) => {
+            addSongToProject(project);
+            setIsProjectModalOpen(false);
+            setIsModalOpen(true);
+          }}
           projects={projects}
         />
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} song={selectedSong} />
-  
-      <div className="sidebar">
-        <h2 >Projects</h2>
-        <ul>
-          {projects.map(project => (
-            <li key={project.id} onClick={() => {
-              console.log("Project Selected:", project.id);
-              setSelectedProjectId(project.id);
-              fetchSongsForProject(project.id);
-            }}>
-              {project.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="main-content">
-        
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} song={selectedSong} />
 
-        <div className="songs-list" >
-          <div className='song-list-header'>
-            <h1>{selectedProject ? selectedProject.name : 'Songs'}</h1>
-            <div className="allSongs-div">
-              <button className="allSongs-button" onClick={fetchSongs}>
+        <div className="sidebar">
+          <h2>Projects</h2>
+          <ul>
+            {projects.map(project => (
+              <li key={project.id} onClick={() => {
+                console.log("Project Selected:", project.id);
+                setSelectedProjectId(project.id);
+                fetchSongsForProject(project.id);
+              }}>
+                {project.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="main-content">
+          <div className="songs-list">
+            <div className='song-list-header'>
+              <h1>{selectedProject ? selectedProject.name : 'Songs'}</h1>
+              <div className="allSongs-div">
+                <button className="allSongs-button" onClick={fetchSongs}>
                   <p>All Songs</p> {/* Settings icon */}
-              </button>
-            </div>
-          </div> {/* Dynamically change header */}
-          {filteredSongs.length > 0 ? (
-            <ul>
-              {filteredSongs.map(song => (
-                <li key={song.id} onClick={() => handleSongSelect(song)}>
-                  <div className="song-card">
-                    <div className="song-title">{song.title}</div>
-                    <div className="song-lyrics">{song.content ? `${song.content.substring(0, 200)}...` : "No lyrics available"}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No songs found.</p>
-          )}
+                </button>
+              </div>
+            </div> {/* Dynamically change header */}
+            {filteredSongs.length > 0 ? (
+              <ul>
+                {filteredSongs.map(song => (
+                  <li key={song.id} onClick={() => handleSongSelect(song)}>
+                    <div className="song-card">
+                      <div className="song-title">{song.title}</div>
+                      <div className="song-lyrics">{song.content ? `${song.content.substring(0, 200)}...` : "No lyrics available"}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No songs found.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  )};
+  );}
   
 
 export default SongsListWeb;
